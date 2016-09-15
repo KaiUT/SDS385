@@ -49,11 +49,13 @@ sample.data <- function(x, y, max.iter, replace=T) {
 }
 
 
-SGD.constant.stepsize <- function(x, y, beta0, step.size, max.iter, replace=T, lambda=0.8) {
+# SGD with constant step size.
+SGD.constant.stepsize <- function(x, y, beta0, step.size, max.iter, replace=T, lambda=0.4) {
     count = 0
     l.total.tracking = c()
     l.average.tracking = c()
     l.weighted.tracking = c()
+    l.average = 0
     l.sum = 0
     beta = beta0
     beta.matrix = beta
@@ -75,8 +77,8 @@ SGD.constant.stepsize <- function(x, y, beta0, step.size, max.iter, replace=T, l
         l.weighed = lambda * l.single + (1 - lambda) * l.sum
         l.weighted.tracking = append(l.weighted.tracking, l.weighed)
         # tracking average l(beta)
-        l.sum = l.sum + l.single
-        l.average = l.sum / count
+        # l.average = l.sum / count
+        l.average = (l.single + 2*l.average)/count
         l.average.tracking = append(l.average.tracking, l.average)
 
         beta.matrix = cbind(beta.matrix, new.beta)
