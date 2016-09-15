@@ -9,6 +9,18 @@ w.prob = function(x, beta) {
 }
 
 
+# tracking l(beta)
+l.beta <- function(x, y, beta) {
+    w = w.prob(x, beta)
+    l = 0
+    for (i in 1:length(y)) {
+        value = y[i, ] * log((w[i] + 0.001) / (1 - w[i] + 0.001)) + 1 * log(1 - w[i] + 0.001)
+        l = l + value
+    }
+    return (-l)
+}
+
+
 f.prime = function(x, y, beta){
     w = w.prob(x, beta)
     w.matrix = as.matrix(w)
@@ -29,11 +41,14 @@ my.newton = function(x, y, f.prime, f.prime2, beta0, max.iter=50) {
     iterations = 0
     beta = beta0
     beta.matrix = beta
+    l.tracking = c()
     while (iterations < max.iter) {
         iterations = iterations + 1
         new.beta = beta - solve(f.prime2(x, y, beta)) %*% f.prime(x, y, beta)  # using default step size 1.
         beta.matrix = cbind(beta.matrix, new.beta)
+        l = l.beta(x, y, new.beta)
+        l.tracking = append(l.tracking, l)
         beta = new.beta
     }
-    return (beta.matrix)
+    return (list(beta.matrix, l.tracking))
 }
