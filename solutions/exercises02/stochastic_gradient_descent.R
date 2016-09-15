@@ -76,6 +76,9 @@ SGD.constant.stepsize <- function(x, y, beta0, step.size, max.iter, replace=T, l
         l.single = l.beta.single(x.sample, y.sample, new.beta)
         l.weighed = lambda * l.single + (1 - lambda) * l.sum
         l.weighted.tracking = append(l.weighted.tracking, l.weighed)
+        if (count > 1000 & count <= max.iter) {
+            l.sum = l.sum + l.single
+        }
         # tracking average l(beta)
         # l.average = l.sum / count
         l.average = (l.single + 2*l.average)/count
