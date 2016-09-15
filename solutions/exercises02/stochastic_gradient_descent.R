@@ -91,12 +91,14 @@ SGD.constant.stepsize <- function(x, y, beta0, step.size, max.iter, replace=T, l
 }
 
 
+# Robbins-Monro rule.
 RM.stepsize <- function(t, C, t0=1, alpha) {
     step.size = C * (t + t0) ** (-alpha)
     return (step.size)
 }
 
 
+# SGD with decaying step size.
 SGD.RM.stepsize <- function(x, y, beta0, C, t0, alpha, max.iter, replace=T, lambda=0.8) {
     count = 0
     l.total.tracking = c()
