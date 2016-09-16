@@ -37,7 +37,7 @@ f.prime2 = function(x, y, beta){
 }
 
 
-my.newton = function(x, y, f.prime, f.prime2, beta0, max.iter=50) {
+my.newton = function(x, y, beta0, max.iter=50) {
     iterations = 0
     beta = beta0
     beta.matrix = beta
