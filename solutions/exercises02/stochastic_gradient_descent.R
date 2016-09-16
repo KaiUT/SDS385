@@ -55,8 +55,8 @@ SGD.constant.stepsize <- function(x, y, beta0, step.size, max.iter, replace=T, l
     l.total.tracking = c()
     l.average.tracking = c()
     l.weighted.tracking = c()
+    l.weighted = 0
     l.average = 0
-    l.sum = 0
     beta = beta0
     beta.matrix = beta
     # sample data
@@ -74,11 +74,13 @@ SGD.constant.stepsize <- function(x, y, beta0, step.size, max.iter, replace=T, l
         l.total.tracking = append(l.total.tracking, l.total)
         # tracking exponentially weighted average
         l.single = l.beta.single(x.sample, y.sample, new.beta)
-        l.weighed = lambda * l.single + (1 - lambda) * l.sum
-        l.weighted.tracking = append(l.weighted.tracking, l.weighed)
         if (count > 1000 & count <= max.iter) {
-            l.sum = l.sum + l.single
+            l.weighed = lambda * l.single + (1 - lambda) * l.weighted
         }
+        else {
+            l.weighed = l.single
+        }
+        l.weighted.tracking = append(l.weighted.tracking, l.weighed)
         # tracking average l(beta)
         # l.average = l.sum / count
         l.average = (l.single + 2*l.average)/count
@@ -104,7 +106,8 @@ SGD.RM.stepsize <- function(x, y, beta0, C, t0, alpha, max.iter, replace=T, lamb
     l.total.tracking = c()
     l.average.tracking = c()
     l.weighted.tracking = c()
-    l.sum = 0
+    l.weighted = 0
+    l.average = 0
     beta = beta0
     beta.matrix = beta
     # sample data
@@ -123,11 +126,15 @@ SGD.RM.stepsize <- function(x, y, beta0, C, t0, alpha, max.iter, replace=T, lamb
         l.total.tracking = append(l.total.tracking, l.total)
         # tracking exponentially weighted average
         l.single = l.beta.single(x.sample, y.sample, new.beta)
-        l.weighed = lambda * l.single + (1 - lambda) * l.sum
+        if (count > 1000 & count <= max.iter) {
+            l.weighed = lambda * l.single + (1 - lambda) * l.weighted
+        }
+        else {
+            l.weighed = l.single
+        }
         l.weighted.tracking = append(l.weighted.tracking, l.weighed)
         # tracking average l(beta)
-        l.sum = l.sum + l.single
-        l.average = l.sum / count
+        l.average = (l.single + 2*l.average)/count
         l.average.tracking = append(l.average.tracking, l.average)
 
         beta.matrix = cbind(beta.matrix, new.beta)
