@@ -1,22 +1,12 @@
 w.prob = function(x, beta) {
-    sample.size = dim(x)[1]
-    w = c()
-    for (i in 1:sample.size){
-        value = 1 / (1 + exp(-x[i, ] %*% beta))
-        w = append(w, value)
-    }
+    w = 1 / (1 + exp(-x %*% beta))
     return (w)
 }
 
 
 # tracking l(beta)
 l.beta <- function(x, y, beta) {
-    w = w.prob(x, beta)
-    l = 0
-    for (i in 1:length(y)) {
-        value = y[i, ] * log((w[i] + 0.001) / (1 - w[i] + 0.001)) + 1 * log(1 - w[i] + 0.001)
-        l = l + value
-    }
+    l = t(y) %*% x %*% beta - t(matrix(1, nrow=dim(y)[1], 1)) %*% log(1 + exp(x %*% beta))
     return (-l)
 }
 
