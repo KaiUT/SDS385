@@ -76,14 +76,13 @@ SGD.constant.stepsize <- function(x, y, beta0, step.size, max.iter, replace=T, l
         l.single = l.beta.single(x.sample, y.sample, new.beta)
         if (count > 1000 & count <= max.iter) {
             l.weighed = lambda * l.single + (1 - lambda) * l.weighted
-        }
-        else {
+        } else {
             l.weighed = l.single
         }
         l.weighted.tracking = append(l.weighted.tracking, l.weighed)
         # tracking average l(beta)
         # l.average = l.sum / count
-        l.average = (l.single + 2*l.average)/count
+        l.average = (l.single + (count-1)*l.average)/count
         l.average.tracking = append(l.average.tracking, l.average)
 
         beta.matrix = cbind(beta.matrix, new.beta)
@@ -128,13 +127,12 @@ SGD.RM.stepsize <- function(x, y, beta0, C, t0, alpha, max.iter, replace=T, lamb
         l.single = l.beta.single(x.sample, y.sample, new.beta)
         if (count > 1000 & count <= max.iter) {
             l.weighed = lambda * l.single + (1 - lambda) * l.weighted
-        }
-        else {
+        } else {
             l.weighed = l.single
         }
         l.weighted.tracking = append(l.weighted.tracking, l.weighed)
         # tracking average l(beta)
-        l.average = (l.single + 2*l.average)/count
+        l.average = (l.single + (count-1)*l.average)/count
         l.average.tracking = append(l.average.tracking, l.average)
 
         beta.matrix = cbind(beta.matrix, new.beta)
