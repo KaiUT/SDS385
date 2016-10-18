@@ -38,3 +38,12 @@ is awesome. However, there are several issues:
 Overall, you did a great job! The code is readable, and can be understand
 easily. After correcting all above issues, it only takes around 30s to finish the
 whole dataset on my laptop.
+
+In addition, I went through your exercises03/04/05 as well. All code are clear
+and readable. It is really great to have comments for every several lines so
+that others can follow your code and even help yourself understand the code
+a long time later. I should do something similar :). Also, I suggest you to post
+visualized results of these code on GitHub as well. It helps others to
+understand your results and figure out if your code do things correctly. I
+highly recommend to use `jupyter notebook` to present your results. You can
+find how to install and run jupyter from here (http://jupyter.readthedocs.io/en/latest/projects/content-projects.html).
