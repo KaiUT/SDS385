@@ -25,4 +25,4 @@ tX = t(X)
 
 init_beta = rep(0.0, p)
 system.time(sgd1 <- sparsesgd_logit(tX[1:10, 1:1000], y[1:1000], rep(1,1000), eta = .1, npass=1, beta0 = init_beta[1:10], lambda=.1))
-system.time(sgd1 <- sparsesgd_logit(tX, y, rep(1,n), eta = .1, npass=1, beta0 = init_beta, lambda=.1))
+system.time(sgd1 <- sparsesgd_logit(tX, y, rep(1,n), eta = 1, npass=1, beta0 = init_beta, lambda=1e-8, discount=0.001))
