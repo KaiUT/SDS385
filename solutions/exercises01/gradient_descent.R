@@ -13,7 +13,7 @@ l.beta <- function(x, y, beta) {
 
 f.prime = function(x, y, beta){
     w = w.prob(x, beta)
-    w.matrix = as.matrix(w)
+    # w.matrix = as.matrix(w)
     value = -t(x) %*% (y - 1 * w)
     return (value)
 }
