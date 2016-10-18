@@ -35,7 +35,7 @@ logLik <- function(x, y, betas, lambda=0) {
 logLikPrime = function(x, y, betas, lambda=0){
     w = wProb(x, betas)
     # w.matrix = as.matrix(w)
-    value = -t(x) %*% (y - 1 * w) + lambda * 2 * t(betas)
+    value = -t(x) %*% (y - 1 * w) + lambda * 2 * betas
     return (value)
 }
 
